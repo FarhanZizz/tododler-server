@@ -66,6 +66,19 @@ async function run() {
             const result = await taskCollections.updateOne(query, updateDoc, options);
             res.send(result)
         })
+        app.patch('/task/comment/:id', async (req, res) => {
+            const id = req.params.id;
+            const task = req.body;
+            const query = { _id: ObjectId(id) }
+            const options = { upsert: false };
+            const updateDoc = {
+                $set: {
+                    comment: task.comment
+                },
+            };
+            const result = await taskCollections.updateOne(query, updateDoc, options);
+            res.send(result)
+        })
         app.delete('/task/delete/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
