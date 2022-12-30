@@ -39,6 +39,18 @@ async function run() {
             const result = await taskCollections.updateOne(query, updateDoc, options);
             res.send(result)
         })
+        app.patch('/task/notcomplete/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const options = { upsert: false };
+            const updateDoc = {
+                $set: {
+                    completed: false,
+                },
+            };
+            const result = await taskCollections.updateOne(query, updateDoc, options);
+            res.send(result)
+        })
         app.patch('/task/edit/:id', async (req, res) => {
             const id = req.params.id;
             const task = req.body;
